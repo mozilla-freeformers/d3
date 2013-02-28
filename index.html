@@ -6,9 +6,13 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <link type="text/css" rel="stylesheet" href="http://mbostock.github.com/d3/talk/20111018/style.css"/>
     <script type="text/javascript" src="http://mbostock.github.com/d3/talk/20111018/d3/d3.js"></script>
-    <script type="text/javascript" src="http://mbostock.github.com/d3/talk/20111018/d3/d3.layout.js"></script>
+<!--     <script type="text/javascript" src="http://mbostock.github.com/d3/talk/20111018/d3/d3.layout.js"></script> -->
+    
+    <script type="text/javascript" src="assets/js/d3.layout.js"></script>
     <style type="text/css">
-
+body{
+	margin-top: 100px;
+}
 .chart {
   display: block;
   margin: auto;
@@ -28,7 +32,7 @@ rect {
   <body>
     <div id="body">
       <div id="footer">
-        d3.layout.treemap
+        d3.layout.treemap-josh
         <div class="hint">click or option-click to descend or ascend</div>
         <div><select>
           <option value="size">Size</option>
@@ -113,15 +117,17 @@ function zoom(d) {
   var t = svg.selectAll("g.cell").transition()
       .duration(d3.event.altKey ? 7500 : 750)
       .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
-
+      console.log('blah: '+d);
+      console.log(d);
   t.select("rect")
       .attr("width", function(d) { return kx * d.dx - 1; })
       .attr("height", function(d) { return ky * d.dy - 1; })
-
+      console.log('test rect');
   t.select("text")
       .attr("x", function(d) { return kx * d.dx / 2; })
       .attr("y", function(d) { return ky * d.dy / 2; })
       .style("opacity", function(d) { return kx * d.dx > d.w ? 1 : 0; });
+      console.log('test text');
 
   node = d;
   d3.event.stopPropagation();
