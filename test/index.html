@@ -1,421 +1,102 @@
 <!DOCTYPE html>
-<!-- saved from url=(0064)https://secure.polisci.ohio-state.edu/faq/d3/zoomabletreemap.htm -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="utf-8">
-<title>Zoomable Treemap</title>
+<html>
+<head>
+  <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+  <link rel="shortcut icon" href="../assets/ico/favicon.png">
+  <link href="style.css" rel="stylesheet">
+  <link href="../assets/css/bootstrap.css" rel="stylesheet">
+  <link href='http://fonts.googleapis.com/css?family=Crushed' rel='stylesheet' type='text/css'>
+
+  <!-------FONT-------->
 <link href='http://fonts.googleapis.com/css?family=Crushed' rel='stylesheet' type='text/css'>
+  
+  <link href='http://fonts.googleapis.com/css?family=Oleo+Script+Swash+Caps' rel='stylesheet' type='text/css'>
 
-
-<!-- Google Analytics code
-	<script type="text/javascript" async="" src="./Zoomable Treemap_files/ga.js"></script><script type="text/javascript">
-
-	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', 'UA-18534173-3']);
-	  _gaq.push(['_trackPageview']);
-	
-	  (function() {
-	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  })();
-	
-	</script>
-end Google Analytics code -->
-
-<style>
-
-#chart {
-  width: 620px;
-  height: 500px;
-  background: #bbb;
-
-}
-
-text {
-  pointer-events: none;
-}
-
-.grandparent text { /* header text */
-  font-weight: bold;
-  font-size: medium;
-  font-family: "Open Sans", Helvetica, Arial, sans-serif; 
-
-}
-
-rect {
-  fill: #fff;
-  stroke: #fff;
-  rx:105px;
-  ry:105px;
  
-}
-
-
-
-rect.parent,
-.grandparent rect {
-  stroke-width: 2px;
   
- 
-}
-
-.grandparent rect {
-  fill: #fff;
-  
-}
-
-.children rect.parent,
- {
-  cursor: pointer;
-   opacity: 0.4;
-   background-image:url(http://cdn-static.zdnet.com/i/story/60/80/010270/firefox_.jpg) repeat;
-   background:url(http://cdn-static.zdnet.com/i/story/60/80/010270/firefox_.jpg) repeat;
-   
-   background-image:url(http://external.ak.fbcdn.net/safe_image.php?d=AQA1lQWeHuV1vY6i&w=155&h=114&url=http%3A%2F%2Febmedia.eventbrite.com%2Fs3-build%2Fimages%2F1116690%2F47527778779%2F1%2Flogo.png) repeat;
-   
-   border-radius:25px;
-   
-   border:1px solid #ddd;
-        background:#E4F2FD;
-        border-radius:2em;
-        -moz-border-radius:2em;
-        -webkit-border-radius:2em
-		
-
-}
-
-.grandparent rect{
-	 cursor: text;
-	}
-
-rect.parent {
-  pointer-events: all; 
-}
-
-.children:hover rect.child,
-.grandparent:hover rect {
-  fill: #aaa;
+  <!-------/FONT---------->
   
   
-}
-
-.textdiv { /* text in the boxes */
-    font-size: medium;
-    padding-left: 15%;
-	padding-top: 10%;
-	font-size: 1.8em;
-	line-height:120%;
-    font-family: 'Crushed', cursive; 
-}
-
-
-</style>
+  
+<script src="http://code.jquery.com/jquery.min.js"></script>
+<link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet" type="text/css" />
+<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap.js"></script>
+  <script src="http://robothaus.org/butter/dist/public/src/butter.js" data-butter-exclude></script>
+  <script data-butter-exclude>
+    ( function( Butter, EditorHelper ) {
+      document.addEventListener( "DOMContentLoaded", function() {
+        Butter.init({
+          config: {
+            "name": "basic",
+            "template": "index.html",
+            "baseDir": "http://robothaus.org/butter/dist/public/",
+            "editor": {
+            },
+            "maxPluginZIndex": 1000
+          },
+          ready: function( butter ) {
+            butter.listen( "mediaready", function mediaReady() {
+              console.log('mediaready');
+              butter.unlisten( "mediaready", mediaReady );
+            });
+            butter.addMedia({url: '#t=,20', target: 'popcorn-dummy'});
+            console.log('butter ready');
+          }
+        });
+      }, false );
+    }( window.Butter, window.EditorHelper ) );
+  </script>
+  
+<meta charset=utf-8 />
+  
+<title>JS Bin</title>
 <script src="http://freeformers.com/maxbye/test/js/d3.v2.js"></script>
 <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet">
+
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="//www.parsecdn.com/js/parse-1.0.10.min.js"></script>
 <script type="text/javascript" src="//connect.facebook.net/en_US/all.js"></script>
 <script type="text/javascript" src="//connect.soundcloud.com/sdk.js"></script>
 <script src="js/gtty.js"></script>
-</head><body><p id="chart">
-<rect color="blue" height="170" width="70" rx="5" ry="5" id="rect7"/>
+<script src="js/chart.js"></script>
+  </head>
+  
+  
+<body>
   <div id="fb-root"></div>
-
-
-
-
  
-<script>
 
-$(document).ready(function() {
-    console.log($('.textdiv.children[0].name'));
-	/*
-	$('rect').each(function () {
-    	var hue = 'rgb(' + (Math.floor((256-199)*Math.random()) + 200) + ',' + (Math.floor((256-199)*Math.random()) + 200) + ',' + (Math.floor((256-199)*Math.random()) + 200) + ')';
-    	$(this).css("fill", hue);
-    });
-	*/
-	var color =  '#'+Math.floor(Math.random()*16777215).toString(16);
-	$('rect').css("fill", color);
+   <div class="container">
 
-    
-	
-	
-});
+      <div class="masthead">
+        <h3 class="muted">Mozilla Mixxit</h3>
+        <div class="navbar">
+          <div class="navbar-inner">
+            <div class="container">
+              <ul class="nav">
+                <li class="active"><a href="http://jsbin.com/igeyig/latest"><p>Home</p></a></li>                
+                <li><a href="#"><p>Plugins</p></a></li>
+                <li><a href="#"><p>Contact</p></a></li>
+              </ul>
+            </div>
+          </div>
+        </div><!-- /.navbar -->
+      </div>
 
-
-var margin = {top: 20, right: 0, bottom: 0, left: 0},
-    width = 620,
-    height = 500 - margin.top - margin.bottom,
-    formatNumber = d3.format(",d"),
-    transitioning;
-
-/* create x and y scales */
-var x = d3.scale.linear()
-    .domain([0, width])
-    .range([0, width]);
-
-var y = d3.scale.linear()
-    .domain([0, height])
-    .range([0, height]);
-
-var treemap = d3.layout.treemap()
-    .children(function(d, depth) { return depth ? null : d.children; })
-    .sort(function(a, b) { return a.value - b.value; })
-    .ratio(height / width * 0.5 * (1 + Math.sqrt(5)))
-    .round(false);
-
-/* create svg */
-var svg = d3.select("#chart").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.bottom + margin.top)
-    .style("margin-left", -margin.left + "px")
-    .style("margin.right", -margin.right + "px")
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-    .style("shape-rendering", "crispEdges");
-
-var grandparent = svg.append("g")
-    .attr("class", "grandparent");
-
-grandparent.append("rect")
-    .attr("y", -margin.top)
-    .attr("width", width)
-    .attr("height", margin.top);
-
-grandparent.append("text")
-    .attr("x", 6)
-    .attr("y", 6 - margin.top)
-    .attr("dy", ".75em");
-
-/* load in data, display root */
-gtty.get({
-    facebook: 'me', //ALWAYS USE ME
-    youtube: 'CodeOrg', //DEFINE USERNAME
-    soundcloud: 'littleboots' //DEFINE USERNAME
-  }, function(root){
-console.log(JSON.parse(JSON.stringify(root)));
-
-
-  initialize(root);
-  //pushData(root);
-  accumulate(root);
-  layout(root);
-  display(root);
-
-
-
-  function pushData(root){
-    console.log(root.children[2]);
-    var testfoo = root.children[2];
-    console.log(testfoo);
-    //work.days[0].jobs.push({"hours" : "1","job_name" : "CodingForum"})//add a job
-   testfoo.children.push({"name": "Courses", "value": 743, "url": "http://polisci.osu.edu"})//add a job
-  }
+     
+     <div class="LynxContain">
+      <p id="chart"></p>
+     </div>
+     <a class="gtty-facebook btn btn-large btn-primary" href="#" onClick="javascript:void(0); gtty.user.facebook.connect();">Connect with Facebook</a>
   
-  function initialize(root) {  
-    root.x = root.y = 0;
-    root.dx = width;
-    root.dy = height;
-    root.depth = 0;
-  
-  
-  }
+     <div id="popcorn-dummy"></div>
 
-  // Aggregate the values for internal nodes. This is normally done by the
-  // treemap layout, but not here because of our custom implementation.
-  function accumulate(d) {
-    return d.children
-        ? d.value = d.children.reduce(function(p, v) { return p + accumulate(v); }, 0)
-        : d.value;
-  }
-
-  // Compute the treemap layout recursively such that each group of siblings
-  // uses the same size (1×1) rather than the dimensions of the parent cell.
-  // This optimizes the layout for the current zoom state. Note that a wrapper
-  // object is created for the parent node for each group of siblings so that
-  // the parent’s dimensions are not discarded as we recurse. Since each group
-  // of sibling was laid out in 1×1, we must rescale to fit using absolute
-  // coordinates. This lets us use a viewport to zoom.
-  function layout(d) {
-    if (d.children) {
-      treemap.nodes({children: d.children});
-      d.children.forEach(function(c) {
-        c.x = d.x + c.x * d.dx;
-        c.y = d.y + c.y * d.dy;
-        c.dx *= d.dx;
-        c.dy *= d.dy;
-        c.parent = d;
-        layout(c);
-      });
-    }
-  }
-
-  /* display show the treemap and writes the embedded transition function */
-  function display(d) {
-    
-   
-    /* create grandparent bar at top */
-    grandparent
-        .datum(d.parent)
-        .on("click", transition)
-      .select("text")
-        .text(name(d));
-
-    var g1 = svg.insert("g", ".grandparent")
-        .datum(d)
-        .attr("class", "depth");
-    
-    /* add in data */
-    var g = g1.selectAll("g")
-        .data(d.children)
-      .enter().append("g");
-
-    /* transition on child click */
-    g.filter(function(d) { return d.children; })
-        .classed("children", true)
-        .on("click", transition);
-    
-    /* write children rectangles */
-    g.selectAll(".child")
-        .data(function(d) { return d.children || [d]; })
-      .enter().append("rect")
-        .attr("class", "child")
-        .call(rect);
-
-    /* write parent rectangle */
-    g.append("rect")
-        .attr("class", "parent")
-        .call(rect)
-        /* open new window based on the json's URL value for leaf nodes */
-        /* Chrome displays this on top */
-        .on("click", function(d) { 
-            if(!d.children){
-                window.open(d.url); 
-            }
-        })
-      .append("title")
-        .text(function(d) { return formatNumber(d.value); });
-    
-    /* Adding a foreign object instead of a text object, allows for text wrapping */
-    g.append("foreignObject")
-        .call(rect)
-        /* open new window based on the json's URL value for leaf nodes */
-        /* Firefox displays this on top */
-        .on("click", function(d) { 
-            if(!d.children){
-                window.open(d.url); 
-            }
-        })
-  
-    
-        .attr("class","foreignobj")
-        .append("xhtml:div") 
-            .attr("dy", ".75em")
-    
-      .html(function(d) { return d.name;})
-      
-      .html(function(d) { return d.data?d.data:d.name;})
-            .attr("class","textdiv"); //textdiv class allows us to style the text easily with CSS
-
-    
-  // DIFFERENT COLORS
-  var color =  '#'+Math.floor(Math.random()*16777215).toString(16);
-
-  $('.parent').css("fill", color);
-  $('.parent').css("opacity",0.4);
-
-  
-  
-    
-  
-    /* create transition function for transitions */
-    function transition(d) {
-      if (transitioning || !d) return;
-      transitioning = true;
-
-      var g2 = display(d),
-          t1 = g1.transition().duration(750),
-          t2 = g2.transition().duration(750);
-
-      // Update the domain only after entering new elements.
-      x.domain([d.x, d.x + d.dx]);
-      y.domain([d.y, d.y + d.dy]);
-
-      // Enable anti-aliasing during the transition.
-      svg.style("shape-rendering", null);
-
-      // Draw child nodes on top of parent nodes.
-      svg.selectAll(".depth").sort(function(a, b) { return a.depth - b.depth; });
-
-      // Fade-in entering text.
-      g2.selectAll("text").style("fill-opacity", 0);
-      g2.selectAll("foreignObject div").style("display", "none"); /*added*/
-
-      // Transition to the new view.
-      t1.selectAll("text").call(text).style("fill-opacity", 0);
-      t2.selectAll("text").call(text).style("fill-opacity", 1);
-      t1.selectAll("rect").call(rect);
-      t2.selectAll("rect").call(rect);
-      
-      t1.selectAll(".textdiv").style("display", "none"); /* added */
-      t1.selectAll(".foreignobj").call(foreign);
-      t2.selectAll(".textdiv").style("display", "block"); /* added */
-      t2.selectAll(".foreignobj").call(foreign); /* added */      
-
-      // Remove the old node when the transition is finished.
-      t1.remove().each("end", function() {
-        svg.style("shape-rendering", "crispEdges");
-        transitioning = false;               
-      });
-      
-    }//endfunc transition
-
-    
-    return g;
-  }
-
-  function text(text) {
-    text.attr("x", function(d) { return x(d.x) + 6; })
-        .attr("y", function(d) { return y(d.y) + 6; });
-  }
-
-  function rect(rect) {
-    rect.attr("x", function(d) { return x(d.x); })
-        .attr("y", function(d) { return y(d.y); })
-        .attr("width", function(d) { return x(d.x + d.dx) - x(d.x); })
-        .attr("height", function(d) { return y(d.y + d.dy) - y(d.y); });     
-  }
-
-  function foreign(foreign){  /* added */
-      foreign.attr("x", function(d) { return x(d.x); })
-        .attr("y", function(d) { return y(d.y); })
-        .attr("width", function(d) { return x(d.x + d.dx) - x(d.x); })
-        .attr("height", function(d) { return y(d.y + d.dy) - y(d.y); });
-  }
-
-  function name(d) {
-    return d.parent
-        ? name(d.parent) + "." + d.name
-        : d.name;
-  }
-
-/*  
-    function image(d) {
-    return d.parent
-        ? name(d.parent) + "." + d.name
-        : d.name;
-  }
- */ 
-  
-  
-  
-
-  });
-
-
-</script>
-<a class="gtty-facebook btn btn-large btn-primary" href="#" onClick="javascript:void(0); gtty.user.facebook.connect();">Connect with Facebook</a>
   
 </body>
 </html>
