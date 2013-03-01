@@ -2,6 +2,7 @@
 <!-- saved from url=(0064)https://secure.polisci.ohio-state.edu/faq/d3/zoomabletreemap.htm -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="utf-8">
 <title>Zoomable Treemap</title>
+<link href='http://fonts.googleapis.com/css?family=Crushed' rel='stylesheet' type='text/css'>
 
 
 <!-- Google Analytics code
@@ -63,7 +64,7 @@ rect.parent,
 }
 
 .children rect.parent,
-.grandparent rect {
+ {
   cursor: pointer;
    opacity: 0.4;
    background-image:url(http://cdn-static.zdnet.com/i/story/60/80/010270/firefox_.jpg) repeat;
@@ -82,6 +83,10 @@ rect.parent,
 
 }
 
+.grandparent rect{
+	 cursor: text;
+	}
+
 rect.parent {
   pointer-events: all; 
 }
@@ -95,8 +100,11 @@ rect.parent {
 
 .textdiv { /* text in the boxes */
     font-size: medium;
-    padding: 5px;
-    font-family: "Open Sans", Helvetica, Arial, sans-serif; 
+    padding-left: 15%;
+	padding-top: 10%;
+	font-size: 1.8em;
+	line-height:120%;
+    font-family: 'Crushed', cursive; 
 }
 
 
@@ -109,8 +117,6 @@ rect.parent {
 <script type="text/javascript" src="//connect.facebook.net/en_US/all.js"></script>
 <script type="text/javascript" src="//connect.soundcloud.com/sdk.js"></script>
 <script src="js/gtty.js"></script>
-
-
 </head><body><p id="chart">
 <rect color="blue" height="170" width="70" rx="5" ry="5" id="rect7"/>
   <div id="fb-root"></div>
@@ -122,7 +128,7 @@ rect.parent {
 <script>
 
 $(document).ready(function() {
-    
+    console.log($('.textdiv.children[0].name'));
 	/*
 	$('rect').each(function () {
     	var hue = 'rgb(' + (Math.floor((256-199)*Math.random()) + 200) + ',' + (Math.floor((256-199)*Math.random()) + 200) + ',' + (Math.floor((256-199)*Math.random()) + 200) + ')';
@@ -315,7 +321,7 @@ console.log(JSON.parse(JSON.stringify(root)));
     
   // DIFFERENT COLORS
   var color =  '#'+Math.floor(Math.random()*16777215).toString(16);
-  //$('.parent:hover').css("fill", color);
+
   $('.parent').css("fill", color);
   $('.parent').css("opacity",0.4);
 
@@ -409,8 +415,7 @@ console.log(JSON.parse(JSON.stringify(root)));
 
 
 </script>
-  
-<a class="gtty-facebook btn btn-large btn-primary" href="#" onclick="javascript:void(0); gtty.user.facebook.connect();">Connect with Facebook</a>
+<a class="gtty-facebook btn btn-large btn-primary" href="#" onClick="javascript:void(0); gtty.user.facebook.connect();">Connect with Facebook</a>
   
 </body>
 </html>
