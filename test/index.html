@@ -19,31 +19,31 @@
 <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet" type="text/css" />
 <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap.js"></script>
-  <script src="http://robothaus.org/butter/dist/public/src/butter.js" data-butter-exclude></script>
-  <script data-butter-exclude>
-    ( function( Butter, EditorHelper ) {
-      document.addEventListener( "DOMContentLoaded", function() {
-        Butter.init({
-          config: {
-            "name": "basic",
-            "template": "index.html",
-            "baseDir": "http://robothaus.org/butter/dist/public/",
-            "editor": {
-            },
-            "maxPluginZIndex": 1000
-          },
-          ready: function( butter ) {
-            butter.listen( "mediaready", function mediaReady() {
-              console.log('mediaready');
-              butter.unlisten( "mediaready", mediaReady );
-            });
-            butter.addMedia({url: '#t=,20', target: 'popcorn-dummy'});
-            console.log('butter ready');
-          }
-        });
-      }, false );
-    }( window.Butter, window.EditorHelper ) );
-  </script>
+  // <script src="http://robothaus.org/butter/dist/public/src/butter.js" data-butter-exclude></script>
+  // <script data-butter-exclude>
+  //   ( function( Butter, EditorHelper ) {
+  //     document.addEventListener( "DOMContentLoaded", function() {
+  //       Butter.init({
+  //         config: {
+  //           "name": "basic",
+  //           "template": "index.html",
+  //           "baseDir": "http://robothaus.org/butter/dist/public/",
+  //           "editor": {
+  //           },
+  //           "maxPluginZIndex": 1000
+  //         },
+  //         ready: function( butter ) {
+  //           butter.listen( "mediaready", function mediaReady() {
+  //             console.log('mediaready');
+  //             butter.unlisten( "mediaready", mediaReady );
+  //           });
+  //           butter.addMedia({url: '#t=,20', target: 'popcorn-dummy'});
+  //           console.log('butter ready');
+  //         }
+  //       });
+  //     }, false );
+  //   }( window.Butter, window.EditorHelper ) );
+  // </script>
   
 <meta charset=utf-8 />
   
@@ -56,6 +56,7 @@
 <script type="text/javascript" src="//www.parsecdn.com/js/parse-1.0.10.min.js"></script>
 <script type="text/javascript" src="//connect.facebook.net/en_US/all.js"></script>
 <script type="text/javascript" src="//connect.soundcloud.com/sdk.js"></script>
+<script src="http://freeformers.com/maxbye/test/js/d3.v2.js"></script>
 <script src="js/gtty.js"></script>
 <script src="js/chart.js"></script>
   </head>

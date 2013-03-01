@@ -49,6 +49,7 @@ var svg = d3.select("#chart").append("svg")
 
 var grandparent = svg.append("g")
     .attr("class", "grandparent");
+    console.log(grandparent);
 
 grandparent.append("rect")
     .attr("y", -margin.top)
@@ -150,15 +151,7 @@ console.log(JSON.parse(JSON.stringify(root)));
     
     /* write children rectangles */
     g.selectAll(".child")
-        .data(function(d) {
-          if(d.children){
-            return d.children;
-          } else if (d.parent.data) {
-            return d.children[] = d;
-          } else {
-            return [d];
-          }
-        })
+        .data(function(d) { return d.children || [d]; })
       .enter().append("rect")
         .attr("class", "child")
         .call(rect);

@@ -154,6 +154,7 @@ console.log(JSON.parse(JSON.stringify(root)));
       .enter().append("rect")
         .attr("class", "child")
         .call(rect);
+    
 
     /* write parent rectangle */
     g.append("rect")

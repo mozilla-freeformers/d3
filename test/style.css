@@ -83,3 +83,104 @@ rect.parent {
     font-family: 'Crushed', cursive; 
 }
 
+html{
+   
+ overflow:scroll;
+  
+}
+body{
+ margin:0 auto;
+ position:inherit;
+ padding-top: 60px;
+ padding-bottom: 60px;
+ background-size:cover;
+ background-attachment:scroll;  
+ background-repeat:no-repeat;
+ background-color:#778899;
+
+ 
+}
+
+
+.muted{
+  font-style:oblique;
+  font-family: 'Crushed', cursive; 
+  color:#A52A2A;
+  text-shadow:2px 2px black;
+  
+}
+
+.masthead{
+  width:720px;
+  margin:0 auto;
+  border:5px hidden;
+  border-radius:12px;
+
+  
+}
+.navbar{
+ width:inherit;
+ 
+ margin:0 auto;
+ position:relative;
+ padding-bottom:10px;
+  
+}
+
+.LynxContain{
+  border:5px dashed white;
+  border-radius:12.5px;
+
+}
+
+.LynxContain, .LynxContain iframe{
+  height:600px;
+  width:720px;
+  margin:0 auto;
+  
+  
+}
+
+
+
+
+.lead{
+  
+    font-weight:800;
+
+  
+}
+
+h1{
+  font-family: 'Crushed', cursive; 
+  color:#A52A2A;
+  text-shadow:3px 2px black;
+}
+
+
+h2{
+  
+  font-family: 'Crushed', cursive; 
+  color:#A52A2A;
+  text-shadow:3px 2px black;
+  
+}
+
+hr{
+  height : 15px;
+  border:3px dashed white;
+  margin : 1em 0;
+}
+p{
+  color:black;
+  font-size:16px;
+  font-family: 'Crushed', cursive; 
+  font-weight:800;
+
+
+  
+}
+
+
+
+
