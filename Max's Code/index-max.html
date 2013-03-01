@@ -26,6 +26,7 @@ end Google Analytics code -->
   width: 620px;
   height: 500px;
   background: #bbb;
+
 }
 
 text {
@@ -36,26 +37,49 @@ text {
   font-weight: bold;
   font-size: medium;
   font-family: "Open Sans", Helvetica, Arial, sans-serif; 
+
 }
 
 rect {
-  fill: none;
+  fill: #fff;
   stroke: #fff;
+  rx:105px;
+  ry:105px;
+ 
 }
+
+
 
 rect.parent,
 .grandparent rect {
   stroke-width: 2px;
+  
  
 }
 
 .grandparent rect {
   fill: #fff;
+  
 }
 
 .children rect.parent,
 .grandparent rect {
   cursor: pointer;
+   opacity: 0.4;
+   background-image:url(http://cdn-static.zdnet.com/i/story/60/80/010270/firefox_.jpg) repeat;
+   background:url(http://cdn-static.zdnet.com/i/story/60/80/010270/firefox_.jpg) repeat;
+   
+   background-image:url(http://external.ak.fbcdn.net/safe_image.php?d=AQA1lQWeHuV1vY6i&w=155&h=114&url=http%3A%2F%2Febmedia.eventbrite.com%2Fs3-build%2Fimages%2F1116690%2F47527778779%2F1%2Flogo.png) repeat;
+   
+   border-radius:25px;
+   
+   border:1px solid #ddd;
+        background:#E4F2FD;
+        border-radius:2em;
+        -moz-border-radius:2em;
+        -webkit-border-radius:2em
+		
+
 }
 
 rect.parent {
@@ -65,6 +89,8 @@ rect.parent {
 .children:hover rect.child,
 .grandparent:hover rect {
   fill: #aaa;
+  
+  
 }
 
 .textdiv { /* text in the boxes */
@@ -73,18 +99,37 @@ rect.parent {
     font-family: "Open Sans", Helvetica, Arial, sans-serif; 
 }
 
+
 </style>
 
 </head><body><p id="chart">
-
+<rect color="blue" height="170" width="70" rx="5" ry="5" id="rect7"/>
+  <div id="fb-root"></div>
+<script src="http://freeformers.com/maxbye/test/js/facebookSDK.js"></script>
 <script src="http://freeformers.com/maxbye/test/js/d3.v2.js"></script>
-<script src="http://freeformers.com/maxbye/test/js/ga.js"></script>
 <script src="http://freeformers.com/maxbye/test/js/jquery-1.7.1.min.js"></script>
 
 
 
  
 <script>
+
+$(document).ready(function() {
+    
+	/*
+	$('rect').each(function () {
+    	var hue = 'rgb(' + (Math.floor((256-199)*Math.random()) + 200) + ',' + (Math.floor((256-199)*Math.random()) + 200) + ',' + (Math.floor((256-199)*Math.random()) + 200) + ')';
+    	$(this).css("fill", hue);
+    });
+	*/
+	var color =  '#'+Math.floor(Math.random()*16777215).toString(16);
+	$('rect').css("fill", color);
+
+    
+	
+	
+});
+
 
 var margin = {top: 20, right: 0, bottom: 0, left: 0},
     width = 620,
@@ -133,16 +178,31 @@ grandparent.append("text")
 /* load in data, display root */
 d3.json("zoomabletreemap.json", function(root) {
 
+
+
   initialize(root);
+  pushData(root);
   accumulate(root);
   layout(root);
   display(root);
 
-  function initialize(root) {
+
+
+  function pushData(root){
+	  console.log(root.children[2]);
+	  var testfoo = root.children[2];
+	  console.log(testfoo);
+	  //work.days[0].jobs.push({"hours" : "1","job_name" : "CodingForum"})//add a job
+	 testfoo.children.push({"name": "Courses", "value": 743, "url": "http://polisci.osu.edu"})//add a job
+  }
+  
+  function initialize(root) {  
     root.x = root.y = 0;
     root.dx = width;
     root.dy = height;
     root.depth = 0;
+	
+	
   }
 
   // Aggregate the values for internal nodes. This is normally done by the
@@ -176,6 +236,8 @@ d3.json("zoomabletreemap.json", function(root) {
 
   /* display show the treemap and writes the embedded transition function */
   function display(d) {
+	  
+	 
     /* create grandparent bar at top */
     grandparent
         .datum(d.parent)
@@ -228,12 +290,28 @@ d3.json("zoomabletreemap.json", function(root) {
                 window.open(d.url); 
             }
         })
+	
+		
         .attr("class","foreignobj")
         .append("xhtml:div") 
             .attr("dy", ".75em")
-            .html(function(d) { return d.name; })
+		
+			.html(function(d) { return d.name;})
+			
+			//.html(function(d) { return '<img src='+d.img+' width=100%>';})
             .attr("class","textdiv"); //textdiv class allows us to style the text easily with CSS
 
+    
+	// DIFFERENT COLORS
+	var color =  '#'+Math.floor(Math.random()*16777215).toString(16);
+	//$('.parent:hover').css("fill", color);
+	$('.parent').css("fill", color);
+	$('.parent').css("opacity",0.4);
+
+	
+	
+    
+	
     /* create transition function for transitions */
     function transition(d) {
       if (transitioning || !d) return;
@@ -304,7 +382,24 @@ d3.json("zoomabletreemap.json", function(root) {
         ? name(d.parent) + "." + d.name
         : d.name;
   }
+
+/*  
+    function image(d) {
+    return d.parent
+        ? name(d.parent) + "." + d.name
+        : d.name;
+  }
+ */ 
+  
+  
+  
 });
 
-</script><svg width="620" height="500" style="margin-left: 0px;"><g transform="translate(0,20)" style="shape-rendering: crispedges;"><g class="depth"><g><rect class="child" x="0" y="320.0000000000001" width="620" height="159.9999999999999"></rect><rect class="parent" x="0" y="320.0000000000001" width="620" height="159.9999999999999"><title>3,416</title></rect><foreignobject x="0" y="320.0000000000001" width="620" height="159.9999999999999" class="foreignobj"><div dy=".75em" class="textdiv">IS 201</div></foreignobject></g><g><rect class="child" x="309.9999999999999" y="0" width="310.0000000000001" height="320.0000000000001"></rect><rect class="parent" x="309.9999999999999" y="0" width="310.0000000000001" height="320.0000000000001"><title>3,416</title></rect><foreignobject x="309.9999999999999" y="0" width="310.0000000000001" height="320.0000000000001" class="foreignobj"><div dy=".75em" class="textdiv">PS 544</div></foreignobject></g><g><rect class="child" x="0" y="0" width="309.9999999999999" height="320.0000000000001"></rect><rect class="parent" x="0" y="0" width="309.9999999999999" height="320.0000000000001"><title>3,416</title></rect><foreignobject x="0" y="0" width="309.9999999999999" height="320.0000000000001" class="foreignobj"><div dy=".75em" class="textdiv">PS 848</div></foreignobject></g></g><g class="grandparent"><rect y="-20" width="620" height="20"></rect><text x="6" y="-14" dy=".75em">Sitemap.International Relations.Courses</text></g></g></svg>
-</p></body></html>
+</script>
+  
+  <button class='login btn btn-success btn-large'>
+    Login
+  </button>
+  
+</body>
+</html>
