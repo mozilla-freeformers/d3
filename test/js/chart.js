@@ -1,5 +1,7 @@
 
 $(document).ready(function() {
+  setup();
+
     console.log($('.textdiv.children[0].name'));
 	/*
 	$('rect').each(function () {
@@ -15,6 +17,8 @@ $(document).ready(function() {
 	
 });
 
+
+function setup(){
 
 var margin = {top: 20, right: 0, bottom: 0, left: 0},
     width = 620,
@@ -286,3 +290,4 @@ console.log(JSON.parse(JSON.stringify(root)));
 
   });
 
+}
