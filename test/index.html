@@ -21,28 +21,28 @@
 <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap.js"></script>
 <script src="http://robothaus.org/butter/dist/public/src/butter.js" data-butter-exclude></script>
 <script data-butter-exclude>
-  //   ( function( Butter, EditorHelper ) {
-  //     document.addEventListener( "DOMContentLoaded", function() {
-  //       Butter.init({
-  //         config: {
-  //           "name": "basic",
-  //           "template": "index.html",
-  //           "baseDir": "http://robothaus.org/butter/dist/public/",
-  //           "editor": {
-  //           },
-  //           "maxPluginZIndex": 1000
-  //         },
-  //         ready: function( butter ) {
-  //           butter.listen( "mediaready", function mediaReady() {
-  //             console.log('mediaready');
-  //             butter.unlisten( "mediaready", mediaReady );
-  //           });
-  //           butter.addMedia({url: '#t=,20', target: 'popcorn-dummy'});
-  //           console.log('butter ready');
-  //         }
-  //       });
-  //     }, false );
-  //   }( window.Butter, window.EditorHelper ) );
+    ( function( Butter, EditorHelper ) {
+      document.addEventListener( "DOMContentLoaded", function() {
+        Butter.init({
+          config: {
+            "name": "basic",
+            "template": "index.html",
+            "baseDir": "http://robothaus.org/butter/dist/public/",
+            "editor": {
+            },
+            "maxPluginZIndex": 1000
+          },
+          ready: function( butter ) {
+            butter.listen( "mediaready", function mediaReady() {
+              console.log('mediaready');
+              butter.unlisten( "mediaready", mediaReady );
+            });
+            butter.addMedia({url: '#t=,20', target: 'popcorn-dummy'});
+            console.log('butter ready');
+          }
+        });
+      }, false );
+    }( window.Butter, window.EditorHelper ) );
 </script>
   
 <meta charset=utf-8 />
@@ -62,7 +62,7 @@
   </head>
   
   
-<body>
+<body style="padding-bottom: 400px;">
   <div id="fb-root"></div>
  
 

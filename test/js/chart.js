@@ -18,8 +18,11 @@ $(document).ready(function() {
 });
 
 
+
+
 function setup(){
 
+    
 var margin = {top: 20, right: 0, bottom: 0, left: 0},
     width = 620,
     height = 500 - margin.top - margin.bottom,
@@ -65,6 +68,8 @@ grandparent.append("text")
     .attr("y", 6 - margin.top)
     .attr("dy", ".75em");
 
+var preTransition;
+
 /* load in data, display root */
 gtty.get({
     facebook: 'me', //ALWAYS USE ME
@@ -78,9 +83,66 @@ console.log(JSON.parse(JSON.stringify(root)));
   //pushData(root);
   accumulate(root);
   layout(root);
-  display(root);
+
+  var rootG = display(root);
+  var goofyFunTime = (function(){
+    return function(path) {
+      rootG.preTransition(path, root, 1);
+      
+    }
+  }());
+
+  Popcorn.plugin( "freeformers", (function(){    
+  
+    // Define plugin wide variables out here
+    
+    return {
+      _setup : function( options ) {
+         // setup code, fire on initialization
+         // options refers to the options passed into the plugin on init
+         // this refers to the popcorn object
+      },
+      start: function( event, options ){
+        goofyFunTime(options.path);
+      },
+      end: function( event, options ){
+         // fire on options.end
+         // event refers to the event object
+         // options refers to the options passed into the plugin on init
+         // this refers to the popcorn object
+      },
+      toString: function(options){
+        return options.path;
+      }
+    };
+
+  }()));
+
+  var media = Butter.app.currentMedia;
+  var popcorn = media.popcorn.popcorn;
+
+  var track = media.addTrack();
+
+  track.addTrackEvent({
+    type: 'freeformers',
+    popcornOptions: {
+      path: 'root.facebook.data.10',
+      start: 1,
+      end: 2
+    }
+  });
+
+  track.addTrackEvent({
+    type: 'freeformers',
+    popcornOptions: {
+      path: 'root.youtube.feed.entry.2.content',
+      start: 5,
+      end: 7
+    }
+  });
 
 
+  Butter.app.editor.openEditor = function(){};
 
   function pushData(root){
     console.log(root.children[2]);
@@ -212,8 +274,8 @@ console.log(JSON.parse(JSON.stringify(root)));
       transitioning = true;
 
       var g2 = display(d),
-          t1 = g1.transition().duration(750),
-          t2 = g2.transition().duration(750);
+          t1 = g1.transition().duration(200),
+          t2 = g2.transition().duration(200);
 
       // Update the domain only after entering new elements.
       x.domain([d.x, d.x + d.dx]);
@@ -248,7 +310,62 @@ console.log(JSON.parse(JSON.stringify(root)));
       
     }//endfunc transition
 
+
+  g.preTransition = (function(){
+
+var PRETRANSITION_DELAY = 700;
+
+return function preTransition(pathToFind,root,round){
+                        
+            var array = pathToFind.split('.');
+            
+            if(root.children){
+                    
+                    for(var i=0; i < root.children.length; i++){
+                    
+                            if(root.children[i].name === array[round]){
+                                                                        
+                                    var newRound = round+1;
+                                    
+                                    var iHold = i;
+                                    
+                                    setTimeout(function(){
+                                    
+                                            $("div.textdiv:contains('"+root.children[iHold].name+"')").parent().prev().animate({
+                                                    opacity: 0.85,
+                                                }, 100);
+                                    
+                                    },PRETRANSITION_DELAY/3);
+                                    
+                                    setTimeout(function(){
+                                            
+                                            $("div.textdiv:contains('"+root.children[iHold].name+"')").parent().prev().animate({
+                                                    opacity: 0.15,
+                                                }, 100);
+                                    
+                                    
+                                    },PRETRANSITION_DELAY/1.5)
+                                                                      
+                                    setTimeout(function(){
+                                            transition(root.children[iHold]);                                    
+                                                preTransition(pathToFind,root.children[iHold],newRound);
+                                        
+                                        },PRETRANSITION_DELAY)
+                            }
+                           
+                    } //for
+                    
+            }
+            else{
+                 //   show the data and stop the transition
+                         console.log('There are no root children for:')
+            }
+            
+            
+} //function preTransition
     
+    }());
+
     return g;
   }
 
