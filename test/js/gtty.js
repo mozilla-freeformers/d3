@@ -23,7 +23,7 @@ var gtty = {
 				FB.getLoginStatus(function(response) {
 					if (response.status === 'connected') {
 						gtty.user.logins({
-							facebook: false,
+							facebook: true,
 							youtube: true,
 							soundcloud: true
 						});
@@ -136,7 +136,8 @@ var gtty = {
 				});
 			},
 			getPhotos: function getPhotos(user, callback){
-				FB.api(user + '/photos', function(response){
+				fbuser = Parse.User.current();
+				FB.api(user + '/photos?access_token=' + fbuser.attributes.authData.facebook.access_token, function(response){
 					gtty.getData.facebook = response;
 					callback();
 				});
@@ -237,6 +238,7 @@ var gtty = {
 				var child = {name: key}; //creates the name [for the top 1.1KEY]
 				if(parent[key] != null){
 					parseData(parent[key], child); //start function again - for the subObj of the response (1.1VALUE)
+					child.value = 10;
 					children.push(child); // pushes the child into the array
 				}
 				// Next time, the object is (e.g) - {name: friends}
@@ -246,7 +248,7 @@ var gtty = {
 			// next time round, it pushes {name: data}  into the new object - but on the children level
 		} else {
 			object.data = gtty.detect(parent);
-			object.value = Math.floor((Math.random() + 1)*10);
+			object.value = 10;
 		}
 	}
 }
