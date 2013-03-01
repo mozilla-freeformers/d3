@@ -23,7 +23,7 @@ var gtty = {
 				FB.getLoginStatus(function(response) {
 					if (response.status === 'connected') {
 						gtty.user.logins({
-							facebook: false,
+							facebook: true,
 							youtube: true,
 							soundcloud: true
 						});
@@ -136,7 +136,8 @@ var gtty = {
 				});
 			},
 			getPhotos: function getPhotos(user, callback){
-				FB.api(user + '/photos', function(response){
+				var fbuser = Parse.User.current();
+				FB.api(user + '/photos?access_token=' + fbuser.attributes.authData.facebook.access_token, function(response){
 					gtty.getData.facebook = response;
 					callback();
 				});
