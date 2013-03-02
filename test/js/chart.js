@@ -123,23 +123,13 @@ console.log(JSON.parse(JSON.stringify(root)));
 
   var track = media.addTrack();
 
-  track.addTrackEvent({
-    type: 'freeformers',
-    popcornOptions: {
-      path: 'root.facebook.data.10',
-      start: 1,
-      end: 2
-    }
-  });
-
-  track.addTrackEvent({
-    type: 'freeformers',
-    popcornOptions: {
-      path: 'root.youtube.feed.entry.2.content',
-      start: 5,
-      end: 7
-    }
-  });
+  var __keydown = false;
+  window.addEventListener('keydown', function(e){
+    __keydown = true;
+  }, false);
+  window.addEventListener('keyup', function(e){
+    __keydown = false;
+  }, false);
 
 
   Butter.app.editor.openEditor = function(){};
@@ -213,8 +203,24 @@ console.log(JSON.parse(JSON.stringify(root)));
     /* transition on child click */
     g.filter(function(d) { return d.children; })
         .classed("children", true)
-        .on("click", transition);
-    
+        .on("click", function(e){
+          transition(e);
+
+          if(__keydown){
+            var pathToAdd = $('.grandparent').text() + '.' + e.name;
+            console.log(pathToAdd);
+
+            track.addTrackEvent({
+              type: 'freeformers',
+              popcornOptions: {
+                path: pathToAdd,
+                start: media.currentTime + 0.2,
+                end: media.currentTime + 3
+              }
+            });
+          }
+        });
+
     /* write children rectangles */
     g.selectAll(".child")
         .data(function(d) { return d.children || [d]; })
@@ -272,6 +278,11 @@ console.log(JSON.parse(JSON.stringify(root)));
     function transition(d) {
       if (transitioning || !d) return;
       transitioning = true;
+
+      var iframes = document.querySelectorAll('iframe');
+      Array.prototype.forEach.call(iframes, function(iframe){
+        iframe.parentNode.removeChild(iframe);
+      });
 
       var g2 = display(d),
           t1 = g1.transition().duration(200),
