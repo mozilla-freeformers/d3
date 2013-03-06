@@ -44,15 +44,28 @@
     ]
   };
 
-
   document.addEventListener('DOMContentLoaded', function(e){
-    var graph = new demo.Graph({
-      data: inputData,
-      container: '.graph-container'
+    function createPath(d){
+      var pathEntries = [];
+      var currentNode = d;
+      
+      while(currentNode){
+        pathEntries.push(currentNode.name);
+        currentNode = currentNode.parent;
+      }
+
+      pathEntries.reverse();
+
+      return pathEntries.join('.');
+    }
+
+    var graph = demo.createGraph(inputData, '.graph-container', {
+      onclick: function(d){
+      },
+      onchange: function(d){
+        console.log(createPath(d));
+      }
     });
-
-    graph.draw();
-
     //graph.navigateTo('root.child1.subchild3');
   }, false);
 
