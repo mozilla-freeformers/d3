@@ -72,7 +72,7 @@
       grandparent
           .datum(d.parent)
           .on("click", function(e){
-            transition(e);
+            transitionTo(e);
             onchange(e);
           })
         .select("text")
@@ -91,7 +91,7 @@
       g.filter(function(d) { return d.children; })
         .classed("children", true)
         .on("click", function(e){
-          transition(e);
+          transitionTo(e);
           onclick(e);
           onchange(e);
         });
@@ -136,7 +136,7 @@
           .attr("class","textdiv"); //textdiv class allows us to style the text easily with CSS
 
       /* create transition function for transitions */
-      function transition(d) {
+      function transitionTo(d) {
         if (transitioning || !d) return;
         transitioning = true;
 
@@ -145,8 +145,9 @@
           iframe.parentNode.removeChild(iframe);
         });
 
-        var g2 = drawSubTree(d),
-            t1 = g1.transition().duration(200),
+        var g2 = drawSubTree(d);
+
+        var t1 = g1.transition().duration(200),
             t2 = g2.transition().duration(200);
 
         // Update the domain only after entering new elements.
@@ -180,12 +181,20 @@
           transitioning = false;               
         });
         
+        return g2;
+
       }//endfunc transition
+
+      g.transitionTo = transitionTo;
 
       return g;
     }
    
-    return drawSubTree(root);
+    var rootG = drawSubTree(root);
+
+    return {
+      transition: rootG.transitionTo
+    };
   }
 
   demo.createGraph = function(inputData, container, options){
@@ -223,7 +232,6 @@
 
     var grandparent = svg.append("g")
         .attr("class", "grandparent");
-        console.log(grandparent);
 
     grandparent.append("rect")
         .attr("y", -margin.top)
@@ -239,7 +247,7 @@
     accumulate(root);
     layout(treemap, root);
 
-    draw(svg, treemap, root, grandparent, xScale, yScale, options);
+    var ctx = draw(svg, treemap, root, grandparent, xScale, yScale, options);
 
     return {
       navigateTo: function(path) {
@@ -259,9 +267,12 @@
 
         collectChildren(root);
 
-        function step(element){
-          that.transition(element);
+        function step(node){
+          var next = ctx.transition(node);
+          var element = next[0].parentNode.querySelector('.parent');
+          element.classList.add('pulsing');
           setTimeout(function(){
+            element.classList.remove('pulsing');
             if(childrenStack.length){
               step(childrenStack.shift());
             }

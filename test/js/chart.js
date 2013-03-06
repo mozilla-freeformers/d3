@@ -21,63 +21,66 @@ $(document).ready(function() {
 
 
 function setup(){
-  var margin = {top: 20, right: 0, bottom: 0, left: 0},
-      width = 620,
-      height = 500 - margin.top - margin.bottom,
-      formatNumber = d3.format(",d"),
-      transitioning;
 
-  /* create x and y scales */
-  var x = d3.scale.linear()
-      .domain([0, width])
-      .range([0, width]);
+    
+var margin = {top: 20, right: 0, bottom: 0, left: 0},
+    width = 620,
+    height = 500 - margin.top - margin.bottom,
+    formatNumber = d3.format(",d"),
+    transitioning;
 
-  var y = d3.scale.linear()
-      .domain([0, height])
-      .range([0, height]);
+/* create x and y scales */
+var x = d3.scale.linear()
+    .domain([0, width])
+    .range([0, width]);
 
-  var treemap = d3.layout.treemap()
-      .children(function(d, depth) { return depth ? null : d.children; })
-      .sort(function(a, b) { return a.value - b.value; })
-      .ratio(height / width * 0.5 * (1 + Math.sqrt(5)))
-      .round(false);
+var y = d3.scale.linear()
+    .domain([0, height])
+    .range([0, height]);
 
-  /* create svg */
-  var svg = d3.select("#chart").append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.bottom + margin.top)
-      .style("margin-left", -margin.left + "px")
-      .style("margin.right", -margin.right + "px")
-    .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-      .style("shape-rendering", "crispEdges");
+var treemap = d3.layout.treemap()
+    .children(function(d, depth) { return depth ? null : d.children; })
+    .sort(function(a, b) { return a.value - b.value; })
+    .ratio(height / width * 0.5 * (1 + Math.sqrt(5)))
+    .round(false);
 
-  var grandparent = svg.append("g")
-      .attr("class", "grandparent");
-      console.log(grandparent);
+/* create svg */
+var svg = d3.select("#chart").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.bottom + margin.top)
+    .style("margin-left", -margin.left + "px")
+    .style("margin.right", -margin.right + "px")
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+    .style("shape-rendering", "crispEdges");
 
-  grandparent.append("rect")
-      .attr("y", -margin.top)
-      .attr("width", width)
-      .attr("height", margin.top);
+var grandparent = svg.append("g")
+    .attr("class", "grandparent");
+    console.log(grandparent);
 
-  grandparent.append("text")
-      .attr("x", 6)
-      .attr("y", 6 - margin.top)
-      .attr("dy", ".75em");
+grandparent.append("rect")
+    .attr("y", -margin.top)
+    .attr("width", width)
+    .attr("height", margin.top);
 
-  var preTransition;
+grandparent.append("text")
+    .attr("x", 6)
+    .attr("y", 6 - margin.top)
+    .attr("dy", ".75em");
 
-  /* load in data, display root */
-  gtty.get({
-      facebook: 'me', //ALWAYS USE ME
-      youtube: 'CodeOrg', //DEFINE USERNAME
-      soundcloud: 'littleboots' //DEFINE USERNAME
-    }, function(root){
-  console.log(JSON.parse(JSON.stringify(root)));
+var preTransition;
+
+/* load in data, display root */
+gtty.get({
+    facebook: 'me', //ALWAYS USE ME
+    youtube: 'CodeOrg', //DEFINE USERNAME
+    soundcloud: 'littleboots' //DEFINE USERNAME
+  }, function(root){
+console.log(JSON.parse(JSON.stringify(root)));
 
 
   initialize(root);
+  //pushData(root);
   accumulate(root);
   layout(root);
 

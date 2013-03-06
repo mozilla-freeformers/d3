@@ -3,21 +3,21 @@ text {
 }
 
 @-webkit-keyframes pulse {
-  0% { opacity: 0.15; }
-  50% { opacity: 0.85; }
-  100% { opacity: 0.15; }
+  0% { opacity: 0.45; }
+  50% { opacity: 0.65; }
+  100% { opacity: 0.45; }
 }
 
 @-moz-keyframes pulse {
-  0% { opacity: 0.15; }
-  50% { opacity: 0.85; }
-  100% { opacity: 0.15; }
+  0% { opacity: 0.45; }
+  50% { opacity: 0.65; }
+  100% { opacity: 0.45; }
 }
 
 @keyframes pulse {
-  0% { opacity: 0.15; }
-  50% { opacity: 0.85; }
-  100% { opacity: 0.15; }
+  0% { opacity: 0.45; }
+  50% { opacity: 0.65; }
+  100% { opacity: 0.45; }
 }
 
 .pulsing {

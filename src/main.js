@@ -45,6 +45,25 @@
   };
 
   document.addEventListener('DOMContentLoaded', function(e){
+    Butter.init({
+      config: {
+        "name": "basic",
+        "template": "index.html",
+        "baseDir": "lib/butter",
+        "editor": {
+        },
+        "maxPluginZIndex": 1000
+      },
+      ready: function( butter ) {
+        butter.listen( "mediaready", function mediaReady() {
+          console.log('mediaready');
+          butter.unlisten( "mediaready", mediaReady );
+        });
+        butter.addMedia({url: '#t=,20', target: 'popcorn-dummy'});
+        console.log('butter ready');
+      }
+    });
+
     function createPath(d){
       var pathEntries = [];
       var currentNode = d;
@@ -63,10 +82,11 @@
       onclick: function(d){
       },
       onchange: function(d){
-        console.log(createPath(d));
+        //console.log(createPath(d));
       }
     });
-    //graph.navigateTo('root.child1.subchild3');
+
+    graph.navigateTo('root.child1.subchild1');
   }, false);
 
 }());
