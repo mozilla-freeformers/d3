@@ -1,0 +1,86 @@
+text {
+  pointer-events: none;
+}
+
+@-webkit-keyframes pulse {
+  0% { opacity: 0.15; }
+  50% { opacity: 0.85; }
+  100% { opacity: 0.15; }
+}
+
+@-moz-keyframes pulse {
+  0% { opacity: 0.15; }
+  50% { opacity: 0.85; }
+  100% { opacity: 0.15; }
+}
+
+@keyframes pulse {
+  0% { opacity: 0.15; }
+  50% { opacity: 0.85; }
+  100% { opacity: 0.15; }
+}
+
+.pulsing {
+  -webkit-animation: pulse .3s infinite;
+  -moz-animation: pulse .3s infinite;
+  animation: pulse .3s infinite;
+}
+
+.grandparent text { /* header text */
+  font-weight: bold;
+  font-size: medium;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+}
+
+rect {
+  fill: #fff;
+  stroke: #fff;
+  rx:105px;
+  ry:105px;
+}
+
+rect, .children, foreignobject, .foreignobj {
+  cursor: pointer;
+}
+
+rect.parent,
+.grandparent rect {
+  stroke-width: 2px;
+}
+
+.grandparent rect {
+  fill: #fff;
+  cursor: pointer;
+}
+
+rect.parent {
+  cursor: pointer;
+  opacity: 0.4;
+  border-radius:25px;
+  border:1px solid #ddd;
+  background:#E4F2FD;
+  border-radius:2em;
+  -moz-border-radius:2em;
+  -webkit-border-radius:2em;
+}
+
+rect.parent {
+  pointer-events: all; 
+  fill: color;
+  opacity: 0.4;
+}
+
+.children:hover rect.child,
+.grandparent:hover rect {
+  fill: #aaa;
+}
+
+/* text in the boxes */
+.textdiv {
+  font-size: medium;
+  padding-left: 15%;
+  padding-top: 10%;
+  font-size: 1.8em;
+  line-height:120%;
+  font-family: 'Crushed', cursive; 
+}
