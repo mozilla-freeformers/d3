@@ -7,9 +7,9 @@
     <script type="text/javascript" src="//connect.soundcloud.com/sdk.js"></script>
     <script type="text/javascript" src="lib/d3.v2.js"></script>
     <!--<script type="text/javascript" src="lib/gtty.js"></script>-->
-    <script type="text/javascript" src="http://popcornjs.org/code/dist/popcorn-complete.js"></script>
+    <script type="text/javascript" src="lib/butter/external/popcorn-js/popcorn.js"></script>
+    <script type="text/javascript" src="lib/butter/src/butter.js"></script>
     <script type="text/javascript" src="src/popcorn.freeformers.js"></script>
-    <script type="text/javascript" src="lib/butter/butter.js"></script>
     <script type="text/javascript" src="src/graph.js"></script>
     <script type="text/javascript" src="src/main.js"></script>
     <link rel="stylesheet" href="css/graph.css">
@@ -19,6 +19,11 @@
     <link href='http://fonts.googleapis.com/css?family=Oleo+Script+Swash+Caps' rel='stylesheet' type='text/css'>
   </head>
   <body>
+    <div class="path-container">
+      <ul class="path"><li>root</li></ul>
+      <button>Create Event</button>
+    </div>
     <div class="graph-container"></div>
+    <div id="popcorn-dummy"></div>
   </body>
 </html>

@@ -12,6 +12,12 @@
             children: [
               {
                 name: 'subsubchild1',
+                children: [
+                  {
+                    name: 'subsubsubchild1',
+                    value: 1
+                  }
+                ],
                 value: 1
               }
             ]
@@ -49,8 +55,11 @@
       config: {
         "name": "basic",
         "template": "index.html",
-        "baseDir": "lib/butter",
+        "baseDir": "lib/butter/",
         "editor": {
+        },
+        "wrapper": {
+          "wrappers": []
         },
         "maxPluginZIndex": 1000
       },
@@ -78,15 +87,51 @@
       return pathEntries.join('.');
     }
 
+    function updatePath(d){
+      var pathList = document.querySelector('.path');
+      var pathEntries = [];
+      var currentNode = d;
+      var entry, li;
+
+      while(pathList.childNodes.length){
+        pathList.removeChild(pathList.firstChild);
+      }
+
+      function createPathListItem(node){
+        li = document.createElement('li');
+        li.innerHTML = node.name;
+        li.classList.add('entry');
+        li.onclick = function(){
+          graph.transition(node);
+          updatePath(node);
+        };
+        return li;
+      }
+
+      while(currentNode){
+        pathList.insertBefore(createPathListItem(currentNode), pathList.firstChild);
+        currentNode = currentNode.parent;
+
+        if(currentNode){
+          li = document.createElement('li');
+          li.innerHTML = '.';
+          pathList.insertBefore(li, pathList.firstChild);
+        }
+      }
+
+      pathEntries.reverse();
+    }
+
     var graph = demo.createGraph(inputData, '.graph-container', {
       onclick: function(d){
       },
       onchange: function(d){
+        updatePath(d);
         //console.log(createPath(d));
       }
     });
 
-    graph.navigateTo('root.child1.subchild1');
+    //graph.navigateTo('root.child1.subchild1');
   }, false);
 
 }());

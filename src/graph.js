@@ -92,8 +92,8 @@
         .classed("children", true)
         .on("click", function(e){
           transitionTo(e);
-          onclick(e);
-          onchange(e);
+          onclick(e, g);
+          onchange(e, g);
         });
 
       /* write children rectangles */
@@ -193,6 +193,7 @@
     var rootG = drawSubTree(root);
 
     return {
+      rootG: rootG,
       transition: rootG.transitionTo
     };
   }
@@ -250,6 +251,8 @@
     var ctx = draw(svg, treemap, root, grandparent, xScale, yScale, options);
 
     return {
+      g: ctx.rootG,
+      transition: ctx.transition,
       navigateTo: function(path) {
         var pathArray = path.split('.').slice(1);
         var childrenStack = [root];

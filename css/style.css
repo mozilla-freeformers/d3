@@ -3,3 +3,19 @@
   height: 500px;
   background: #bbb;
 }
+
+.path {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: inline;
+}
+
+.path li {
+  display: inline;
+  cursor: pointer;
+}
+
+.path .entry:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
