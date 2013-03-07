@@ -102,20 +102,66 @@
 
       pathEntries.reverse();
       currentPath = pathEntries.join('.');
+
+      return pathEntries;
     }
 
     var graph = demo.createGraph(gtty.parseData(inputData), '.graph-container', {
       onclick: function(d){
       },
       onchange: function(d){
-        updatePath(d);
+        var pathEntries = updatePath(d).slice(1);
+        var currentNode = inputData;
 
-        jsonView.value = JSON.stringify(d, function(key, value){
-          if ( ['parent', 'x', 'y', 'dx', 'dy', 'depth', 'z', 'area', ].indexOf(key) > -1 ) {
-            return;
+        var lastKey = '';
+        while(pathEntries.length){
+          lastKey = pathEntries.shift();
+          currentNode = currentNode[lastKey];
+        }
+
+        var spaces = '                                      ';
+        var spaceMultiplier = 4;
+        function readObject(object, depth){
+          if(depth > 2){
+            return '\n' + spaces.substr(0, depth * spaceMultiplier) + '...';
           }
-          return value;
-        }, 2);
+          
+          var str = '';
+
+          console.log(object);
+          Object.keys(object).forEach(function(key, index){
+            var value = object[key];
+            if(index > 0){
+              str += ',';
+            }
+            str += '\n' + spaces.substr(0, depth * spaceMultiplier) + key + ': ';
+            if(Array.isArray(value)){
+              str += ' [';
+              str += readObject(value, depth + 1);
+              str += '\n' + spaces.substr(0, depth * spaceMultiplier) + ']';
+            }
+            else if(typeof value === 'object'){
+              str += ' {';
+              str += readObject(value, depth + 1);
+              str += '\n' + spaces.substr(0, depth * spaceMultiplier) + '}';
+            }
+            else if(typeof value === 'string'){
+              str += '"' + value + '"';
+            }
+            else{
+              str += value;
+            }
+          });
+
+          return str;
+        }
+
+        if(typeof currentNode === 'object'){
+          jsonView.value = readObject(currentNode, 0);
+        }
+        else {
+          jsonView.value = currentNode;
+        }
       }
     });
 
