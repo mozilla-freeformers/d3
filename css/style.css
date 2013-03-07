@@ -1,7 +1,65 @@
+@-webkit-keyframes outline-pulse {
+  0% { background-color: rgba(200, 30, 30, 0.45); }
+  50% { background-color: rgba(200, 30, 30, 0.65); }
+  100% { background-color: rgba(200, 30, 30, 0.45); }
+}
+
+@-moz-keyframes outline-pulse {
+  0% { background-color: rgba(200, 30, 30, 0.45); }
+  50% { background-color: rgba(200, 30, 30, 0.65); }
+  100% { background-color: rgba(200, 30, 30, 0.45); }
+}
+
+@keyframes outline-pulse {
+  0% { background-color: rgba(200, 30, 30, 0.45); }
+  50% { background-color: rgba(200, 30, 30, 0.65); }
+  100% { background-color: rgba(200, 30, 30, 0.45); }
+}
+
+body {
+  margin: 0 auto;
+  position: inherit;
+  padding-top: 60px;
+  padding-bottom: 560px;
+  background-size: cover;
+  background-attachment: scroll;  
+  background-repeat: no-repeat;
+  background-color: #778899;
+}
+
+.container {
+  width: 620px;
+  margin: 0 auto;
+}
+
+.muted {
+  font-style: oblique;
+  font-family: 'Crushed', cursive; 
+  color: #A52A2A;
+  text-shadow: 2px 2px black;  
+}
+
+.masthead {
+  width: 620px;
+  margin: 0 auto;
+  border: 5px hidden;
+  border-radius: 12px;
+}
+
 .graph-container {
   width: 620px;
   height: 500px;
-  background: #bbb;
+  margin: 0 auto; 
+  border: 5px dashed white;
+  border-radius: 12.5px;
+}
+
+.graph-container svg {
+  border-radius: 12.5px;
+}
+
+.path-container {
+  margin: 10px 0;
 }
 
 .path {
@@ -18,4 +76,13 @@
 
 .path .entry:hover {
   background: rgba(0, 0, 0, 0.3);
+}
+
+.butter-tray {
+}
+
+.outline-pulse {
+  -webkit-animation: outline-pulse .3s infinite;
+  -moz-animation: outline-pulse .3s infinite;
+  animation: outline-pulse .3s infinite;
 }

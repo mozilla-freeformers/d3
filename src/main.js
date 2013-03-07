@@ -51,6 +51,10 @@
   };
 
   document.addEventListener('DOMContentLoaded', function(e){
+    var butterTrack;
+
+    var currentPath = 'root';
+
     Butter.init({
       config: {
         "name": "basic",
@@ -60,16 +64,14 @@
         },
         "wrapper": {
           "wrappers": []
-        },
-        "maxPluginZIndex": 1000
+        }
       },
       ready: function( butter ) {
         butter.listen( "mediaready", function mediaReady() {
-          console.log('mediaready');
           butter.unlisten( "mediaready", mediaReady );
         });
         butter.addMedia({url: '#t=,20', target: 'popcorn-dummy'});
-        console.log('butter ready');
+        butterTrack = butter.currentMedia.addTrack();
       }
     });
 
@@ -108,8 +110,10 @@
         return li;
       }
 
+      currentPath = '';
       while(currentNode){
         pathList.insertBefore(createPathListItem(currentNode), pathList.firstChild);
+        pathEntries.push(currentNode.name);
         currentNode = currentNode.parent;
 
         if(currentNode){
@@ -120,6 +124,7 @@
       }
 
       pathEntries.reverse();
+      currentPath = pathEntries.join('.');
     }
 
     var graph = demo.createGraph(inputData, '.graph-container', {
@@ -127,9 +132,41 @@
       },
       onchange: function(d){
         updatePath(d);
-        //console.log(createPath(d));
       }
     });
+
+    var createEventButton = document.querySelector('*[data-function="create-event"]');
+    var timelineHighlightTimeout;
+    createEventButton.onclick = function(e){
+      butterTrack.addTrackEvent({
+        type: 'freeformers',
+        popcornOptions: {
+          start: Butter.app.currentMedia.currentTime,
+          end: Butter.app.currentMedia.currentTime + 1,
+          callback: function(path){
+            if(currentPath !== path){
+              graph.navigateTo(path);
+            }
+          },
+          path: currentPath
+        }
+      });
+
+      var timelineElement = document.querySelector('.butter-tray .media-status-container');
+      var tracksElement = document.querySelector('.butter-tray .tracks-container-wrapper');
+
+      if(timelineHighlightTimeout){
+        clearTimeout(timelineHighlightTimeout);
+      }
+
+      timelineElement.classList.add('outline-pulse');
+      tracksElement.classList.add('outline-pulse');
+      timelineHighlightTimeout = setTimeout(function(){
+        timelineHighlightTimeout = null;
+        timelineElement.classList.remove('outline-pulse');
+        tracksElement.classList.remove('outline-pulse');
+      }, 1000);
+    };
 
     //graph.navigateTo('root.child1.subchild1');
   }, false);

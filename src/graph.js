@@ -33,7 +33,7 @@
     }
   }
 
-  function draw(svg, treemap, root, grandparent, xScale, yScale, options){
+  function draw(svg, treemap, root, xScale, yScale, options){
 
     options = options || {};
 
@@ -68,20 +68,8 @@
             : d.name;
       }
 
-      /* create grandparent bar at top */
-      grandparent
-          .datum(d.parent)
-          .on("click", function(e){
-            transitionTo(e);
-            onchange(e);
-          })
-        .select("text")
-          .text(name(d));
+      var g1 = svg.insert("g");
 
-      var g1 = svg.insert("g", ".grandparent")
-          .datum(d)
-          .attr("class", "depth");
-      
       /* add in data */
       var g = g1.selectAll("g")
           .data(d.children)
@@ -145,10 +133,12 @@
           iframe.parentNode.removeChild(iframe);
         });
 
+        onchange(d);
+
         var g2 = drawSubTree(d);
 
-        var t1 = g1.transition().duration(200),
-            t2 = g2.transition().duration(200);
+        var t1 = g1.transition().duration(200);
+        var t2 = g2.transition().duration(200);
 
         // Update the domain only after entering new elements.
         xScale.domain([d.x, d.x + d.dx]);
@@ -201,10 +191,8 @@
   demo.createGraph = function(inputData, container, options){
     var root = JSON.parse(JSON.stringify(inputData));
 
-    var margin = {top: 20, right: 0, bottom: 0, left: 0};
-
     width = options.width || 620;
-    height = (options.height || 500) - margin.top - margin.bottom;
+    height = options.height || 500;
 
     /* create x and y scales */
     var xScale = d3.scale.linear()
@@ -223,32 +211,16 @@
 
     /* create svg */
     var svg = d3.select(container).append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.bottom + margin.top)
-        .style("margin-left", -margin.left + "px")
-        .style("margin.right", -margin.right + "px")
-      .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-        .style("shape-rendering", "crispEdges");
-
-    var grandparent = svg.append("g")
-        .attr("class", "grandparent");
-
-    grandparent.append("rect")
-        .attr("y", -margin.top)
         .attr("width", width)
-        .attr("height", margin.top);
-
-    grandparent.append("text")
-        .attr("x", 6)
-        .attr("y", 6 - margin.top)
-        .attr("dy", ".75em");
+        .attr("height", height)
+      .append("g")
+        .style("shape-rendering", "crispEdges");
 
     initialize(root, width, height);
     accumulate(root);
     layout(treemap, root);
 
-    var ctx = draw(svg, treemap, root, grandparent, xScale, yScale, options);
+    var ctx = draw(svg, treemap, root, xScale, yScale, options);
 
     return {
       g: ctx.rootG,
