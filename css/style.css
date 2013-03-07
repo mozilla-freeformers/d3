@@ -28,7 +28,6 @@ body {
 }
 
 .container {
-  width: 620px;
   margin: 0 auto;
 }
 
@@ -40,8 +39,6 @@ body {
 }
 
 .masthead {
-  width: 620px;
-  margin: 0 auto;
   border: 5px hidden;
   border-radius: 12px;
 }
@@ -49,13 +46,34 @@ body {
 .graph-container {
   width: 620px;
   height: 500px;
-  margin: 0 auto; 
   border: 5px dashed white;
   border-radius: 12.5px;
+  position: relative;
 }
 
 .graph-container svg {
   border-radius: 12.5px;
+  position: relative;
+  z-index: 2;
+}
+
+.json-view {
+  width: 500px;
+  height: 400px;
+  position: absolute;
+  top: 40px;
+  right: 0px;
+  z-index: 1;
+  padding-left: 80px;
+  transition: right .2s ease-out;
+  -moz-transition: right .2s ease-out;
+  -webkit-transition: right .2s ease-out;
+  -o-transition: right .2s ease-out;
+  resize: none;
+}
+
+.json-view.open {
+  right: -520px;
 }
 
 .path-container {

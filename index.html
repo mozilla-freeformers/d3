@@ -13,7 +13,7 @@
     <script type="text/javascript" src="//connect.facebook.net/en_US/all.js"></script>
     <script type="text/javascript" src="//connect.soundcloud.com/sdk.js"></script>
     <script type="text/javascript" src="lib/d3.v2.js"></script>
-    <!--<script type="text/javascript" src="lib/gtty.js"></script>-->
+    <script type="text/javascript" src="lib/gtty.js"></script>
     <script type="text/javascript" src="lib/butter/external/popcorn-js/popcorn.js"></script>
     <script type="text/javascript" src="lib/butter/src/butter.js"></script>
     <script type="text/javascript" src="src/popcorn.freeformers.js"></script>
@@ -30,8 +30,11 @@
       <div class="path-container">
         <ul class="path"><li class="entry">root</li></ul>
         <button data-function="create-event">Create Event</button>
+        <button data-function="toggle-json">Show/Hide JSON</button>
       </div>
-      <div class="graph-container"></div>
+      <div class="graph-container">
+        <textarea class="json-view" readonly></textarea>
+      </div>
       <div id="popcorn-dummy"></div>
     </div>
   </body>

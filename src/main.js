@@ -1,52 +1,27 @@
 (function(){
 
   var inputData = {
-    name: 'root',
-    children: [
-      {
-        name: 'child1',
-        children: [
-          {
-            name: 'subchild1',
-            value: 1,
-            children: [
-              {
-                name: 'subsubchild1',
-                children: [
-                  {
-                    name: 'subsubsubchild1',
-                    value: 1
-                  }
-                ],
-                value: 1
-              }
-            ]
-          },
-          {
-            name: 'subchild2',
-            value: 1
-          },
-          {
-            name: 'subchild3',
-            value: 1
-          }
+    foo1: {
+      bar: 'baz',
+      boop: {
+        beep1: [
+          'borpy',
+          'borpy',
         ],
-        value: 1
-      },
-      {
-        name: 'child2',
-        children: [
-          {
-            name: 'subchild4',
-            value: 1
-          },
-          {
-            name: 'subchild5',
-            value: 1
-          }
-        ],
-        value: 1
+        beep2: [
+          'borpy',
+          'borpy',
+          'borpy',
+          'borpy',
+        ]
       }
+    },
+    foo2: [
+      'bar',
+      'bar',
+      'bar',
+      'baz',
+      'beep'
     ]
   };
 
@@ -54,6 +29,8 @@
     var butterTrack;
 
     var currentPath = 'root';
+
+    var jsonView = document.querySelector('.json-view');
 
     Butter.init({
       config: {
@@ -127,15 +104,23 @@
       currentPath = pathEntries.join('.');
     }
 
-    var graph = demo.createGraph(inputData, '.graph-container', {
+    var graph = demo.createGraph(gtty.parseData(inputData), '.graph-container', {
       onclick: function(d){
       },
       onchange: function(d){
         updatePath(d);
+
+        jsonView.value = JSON.stringify(d, function(key, value){
+          if ( ['parent', 'x', 'y', 'dx', 'dy', 'depth', 'z', 'area', ].indexOf(key) > -1 ) {
+            return;
+          }
+          return value;
+        }, 2);
       }
     });
 
     var createEventButton = document.querySelector('*[data-function="create-event"]');
+
     var timelineHighlightTimeout;
     createEventButton.onclick = function(e){
       butterTrack.addTrackEvent({
@@ -168,7 +153,11 @@
       }, 1000);
     };
 
-    //graph.navigateTo('root.child1.subchild1');
+    var toggleJSONButton = document.querySelector('*[data-function="toggle-json"]');
+    toggleJSONButton.onclick = function(e){
+      jsonView.classList.toggle('open');
+    };
+
   }, false);
 
 }());
