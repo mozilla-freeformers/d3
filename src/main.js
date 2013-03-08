@@ -32,7 +32,7 @@
     else {
       gtty.get({
         youtube: 'CodeOrg', //DEFINE USERNAME
-        soundcloud: 'littleboots' //DEFINE USERNAME
+//        soundcloud: 'littleboots' //DEFINE USERNAME
       }, init);
     }
   }, false);

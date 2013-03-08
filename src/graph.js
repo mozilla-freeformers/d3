@@ -123,7 +123,11 @@
       
         .html(function(d) { return d.name;})
         
-        .html(function(d) { return d.data?d.data:d.name;})
+        .html(function(d) { return d.content
+          ? d.content
+          : ( d.data
+              ? d.data
+              : ( d.name + ( d.leafContent ? ' <sup>[!]</sup>' : '') ) );})
           .attr("class","textdiv"); //textdiv class allows us to style the text easily with CSS
 
       /* create transition function for transitions */

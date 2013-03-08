@@ -77,10 +77,17 @@ rect.parent {
 
 /* text in the boxes */
 .textdiv {
+  position: relative;
   font-size: medium;
   padding-left: 1em;
   padding-top: 1em;
   font-size: 1.8em;
   line-height:120%;
-  font-family: 'Crushed', cursive; 
+  font-family: 'Crushed', cursive;
+}
+
+.textdiv iframe {
+  position: relative;
+  left: -1em;
+  top: -1em;
 }
