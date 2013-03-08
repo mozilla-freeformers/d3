@@ -26,13 +26,11 @@
   };
 
   document.addEventListener('DOMContentLoaded', function(e){
-    console.log(window.location.search);
     if(window.location.search === '?test'){
       init(testData);
     }
     else {
       gtty.get({
-        facebook: 'me', //ALWAYS USE ME
         youtube: 'CodeOrg', //DEFINE USERNAME
         soundcloud: 'littleboots' //DEFINE USERNAME
       }, init);
@@ -40,6 +38,7 @@
   }, false);
 
   function init(inputData){
+    console.log(inputData);
     var butterTrack;
 
     var currentPath = 'root';
@@ -129,8 +128,13 @@
           if(index > 0){
             str += ',';
           }
+          
           str += '\n' + spaces.substr(0, depth * spaceMultiplier) + key + ': ';
-          if(Array.isArray(value)){
+          
+          if(value === null){
+            str += '<null>';
+          }
+          else if(Array.isArray(value)){
             str += ' [';
             str += readObject(value, depth + 1);
             str += '\n' + spaces.substr(0, depth * spaceMultiplier) + ']';

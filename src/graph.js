@@ -1,6 +1,7 @@
 (function(){
 
   var PRETRANSITION_DELAY = 700;
+  var UPPER_ACCUMULATION_LIMIT = 4;
 
   window.demo = window.demo || {};
 
@@ -15,7 +16,9 @@
 
   function accumulate(d) {
     return d.children
-        ? d.value = d.children.reduce(function(p, v) { return p + accumulate(v); }, 0)
+        ? d.value = d.children.reduce(function(p, v) {
+            return Math.min(UPPER_ACCUMULATION_LIMIT, p + accumulate(v));
+          }, 0)
         : d.value;
   }
 
@@ -101,7 +104,7 @@
             onclick(d);
           })
         .append("title")
-          .text(function(d) { return formatNumber(d.value); });
+          .text(function(d) { return d.name; });
       
       /* Adding a foreign object instead of a text object, allows for text wrapping */
       g.append("foreignObject")
