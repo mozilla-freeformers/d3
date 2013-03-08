@@ -1,6 +1,6 @@
 (function(){
 
-  var inputData = {
+  var testData = {
     foo1: {
       bar: 'baz',
       boop: {
@@ -26,6 +26,20 @@
   };
 
   document.addEventListener('DOMContentLoaded', function(e){
+    console.log(window.location.search);
+    if(window.location.search === '?test'){
+      init(testData);
+    }
+    else {
+      gtty.get({
+        facebook: 'me', //ALWAYS USE ME
+        youtube: 'CodeOrg', //DEFINE USERNAME
+        soundcloud: 'littleboots' //DEFINE USERNAME
+      }, init);
+    }
+  }, false);
+
+  function init(inputData){
     var butterTrack;
 
     var currentPath = 'root';
@@ -51,20 +65,6 @@
         butterTrack = butter.currentMedia.addTrack();
       }
     });
-
-    function createPath(d){
-      var pathEntries = [];
-      var currentNode = d;
-      
-      while(currentNode){
-        pathEntries.push(currentNode.name);
-        currentNode = currentNode.parent;
-      }
-
-      pathEntries.reverse();
-
-      return pathEntries.join('.');
-    }
 
     function updatePath(d){
       var pathList = document.querySelector('.path');
@@ -106,62 +106,65 @@
       return pathEntries;
     }
 
+  function produceJSON(pathEntries){
+    var currentNode = inputData;
+
+    var lastKey = '';
+    while(pathEntries.length){
+      lastKey = pathEntries.shift();
+      currentNode = currentNode[lastKey];
+    }
+
+    var spaces = '                                      ';
+    var spaceMultiplier = 4;
+    function readObject(object, depth){
+      if(depth > 2){
+        return '\n' + spaces.substr(0, depth * spaceMultiplier) + '...';
+      }
+        
+      var str = '';
+
+        Object.keys(object).forEach(function(key, index){
+          var value = object[key];
+          if(index > 0){
+            str += ',';
+          }
+          str += '\n' + spaces.substr(0, depth * spaceMultiplier) + key + ': ';
+          if(Array.isArray(value)){
+            str += ' [';
+            str += readObject(value, depth + 1);
+            str += '\n' + spaces.substr(0, depth * spaceMultiplier) + ']';
+          }
+          else if(typeof value === 'object'){
+            str += ' {';
+            str += readObject(value, depth + 1);
+            str += '\n' + spaces.substr(0, depth * spaceMultiplier) + '}';
+          }
+          else if(typeof value === 'string'){
+            str += '"' + value + '"';
+          }
+          else{
+            str += value;
+          }
+        });
+
+        return str;
+      }
+
+      if(typeof currentNode === 'object'){
+        jsonView.value = readObject(currentNode, 0);
+      }
+      else {
+        jsonView.value = currentNode;
+      }
+    }
+
     var graph = demo.createGraph(gtty.parseData(inputData), '.graph-container', {
       onclick: function(d){
       },
       onchange: function(d){
         var pathEntries = updatePath(d).slice(1);
-        var currentNode = inputData;
-
-        var lastKey = '';
-        while(pathEntries.length){
-          lastKey = pathEntries.shift();
-          currentNode = currentNode[lastKey];
-        }
-
-        var spaces = '                                      ';
-        var spaceMultiplier = 4;
-        function readObject(object, depth){
-          if(depth > 2){
-            return '\n' + spaces.substr(0, depth * spaceMultiplier) + '...';
-          }
-          
-          var str = '';
-
-          console.log(object);
-          Object.keys(object).forEach(function(key, index){
-            var value = object[key];
-            if(index > 0){
-              str += ',';
-            }
-            str += '\n' + spaces.substr(0, depth * spaceMultiplier) + key + ': ';
-            if(Array.isArray(value)){
-              str += ' [';
-              str += readObject(value, depth + 1);
-              str += '\n' + spaces.substr(0, depth * spaceMultiplier) + ']';
-            }
-            else if(typeof value === 'object'){
-              str += ' {';
-              str += readObject(value, depth + 1);
-              str += '\n' + spaces.substr(0, depth * spaceMultiplier) + '}';
-            }
-            else if(typeof value === 'string'){
-              str += '"' + value + '"';
-            }
-            else{
-              str += value;
-            }
-          });
-
-          return str;
-        }
-
-        if(typeof currentNode === 'object'){
-          jsonView.value = readObject(currentNode, 0);
-        }
-        else {
-          jsonView.value = currentNode;
-        }
+        produceJSON(pathEntries);
       }
     });
 
@@ -204,6 +207,7 @@
       jsonView.classList.toggle('open');
     };
 
-  }, false);
+    produceJSON([]);
+  }
 
 }());

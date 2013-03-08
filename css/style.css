@@ -28,7 +28,7 @@ body {
 }
 
 .container {
-  margin: 0 auto;
+  margin: 0 1em;
 }
 
 .muted {
@@ -41,6 +41,10 @@ body {
 .masthead {
   border: 5px hidden;
   border-radius: 12px;
+}
+
+.buttons-container {
+  padding: 3px;
 }
 
 .graph-container {
@@ -59,7 +63,7 @@ body {
 
 .json-view {
   width: 500px;
-  height: 400px;
+  height: 415px;
   position: absolute;
   top: 40px;
   right: 0px;
